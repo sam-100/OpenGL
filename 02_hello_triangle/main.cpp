@@ -60,57 +60,15 @@ int main(int argc, char **argv) {
     // Link the Vertex Attributes
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 3*sizeof(float), NULL);
     glEnableVertexAttribArray(0);
-
-    // load shader source codes
-    string vs, fs;
-    vs = load_file("vertex.glsl");
-    fs = load_file("fragment.glsl");
-    const GLchar *vertex_shader = vs.c_str();
-    const GLchar *fragment_shader = fs.c_str();
-
-
-    // Compile vertex shader
-    int status;
-    char infoLog[512];
-    GLuint VSO = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(VSO, 1, &vertex_shader, NULL);
-    glCompileShader(VSO);
-    glGetShaderiv(VSO, GL_COMPILE_STATUS, &status);
-    if(!status) {
-        glGetShaderInfoLog(VSO, 512, NULL, infoLog);
-        cerr << infoLog << endl;
-        error("Failed to compile vertex shader.", 2);
-    }
     
-    // compile fragment shader
-    GLuint FSO = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(FSO, 1, &fragment_shader, nullptr);
-    glCompileShader(FSO);
-    glGetShaderiv(FSO, GL_COMPILE_STATUS, &status);
-    if(!status) {
-        glGetShaderInfoLog(FSO, 512, NULL, infoLog);
-        cerr << infoLog << endl;
-        error("Failed to compile vertex shader.", 2);
-    }
-
-    // Create and link shader program
-    GLuint program = glCreateProgram();
-    glAttachShader(program, VSO);
-    glAttachShader(program, FSO);
-    glLinkProgram(program);
-    glGetProgramiv(program, GL_LINK_STATUS, &status);
-    if(!status) {
-        glGetProgramInfoLog(program, 512, nullptr, infoLog);
-        cerr << infoLog << endl;
-        error("Failed to link the shader program.", 3);
-    }
+    GLuint VSO = compile_shader("vertex.glsl", GL_VERTEX_SHADER);
+    GLuint FSO = compile_shader("fragment.glsl", GL_FRAGMENT_SHADER);
+    GLuint program = link_shaders(VSO, FSO);
 
     // Bind the program
     glUseProgram(program);
     glDeleteShader(VSO);
     glDeleteShader(FSO);
-
-
 
     // rendering loop
     while(!glfwWindowShouldClose(window)) {
