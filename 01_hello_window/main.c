@@ -9,6 +9,7 @@
 int screen_width = 800;
 int screen_height = 600;
 
+
 int main(int argc, char **argv) {
     if(glfwInit() == GLFW_FALSE)
         error("Failed to initialize glfw library.", -1);
@@ -28,6 +29,7 @@ int main(int argc, char **argv) {
     
     glViewport(0, 0, screen_width, screen_height);
 
+    
 
     // setting the callback functions
     glfwSetFramebufferSizeCallback(window, callback_frame_buffer_resize);
