@@ -34,6 +34,15 @@ string load_file(const char *file_name) {
     return ss.str();
 }
 
+GLenum get_format(int channels) {
+    if(channels == 3)
+        return GL_RGB;
+    if(channels == 4)
+        return GL_RGBA;
+    error("Unknown channel.", 5);
+    return -1;
+}
+
 
 /* --------------------------------------- Shader Related functions ------------------------------------ */
 
@@ -118,9 +127,11 @@ GLuint generate_texture(const char *file_name) {
     if(!data) 
         error("Failed to load image.", 4);
     
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    GLenum format = get_format(nrChannels);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
 
+    stbi_set_flip_vertically_on_load(true);
     stbi_image_free(data);
 
     return texture;

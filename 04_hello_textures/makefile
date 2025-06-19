@@ -6,7 +6,7 @@ SRC = main.cpp utils.cpp events.c \
       $(ROOT_DIR)/ThirdParty/src/glad.c
 
 all: $(SRC) 
-	@$(CXX) -o main $(CFLAGS) $(SRC) $(LDFLAGS)
+	@ $(CXX) -o main $(CFLAGS) $(SRC) $(LDFLAGS)
 
 run: main
 	@./main

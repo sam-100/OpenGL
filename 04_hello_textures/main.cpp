@@ -11,6 +11,7 @@
 
 using namespace std;
 
+const char *window_title = "Hello Textures";
 int screen_width = 800;
 int screen_height = 600;
 
@@ -26,6 +27,7 @@ unsigned int indices[] = {
     0, 1, 2, 
     2, 3, 0
 };
+
 int vertex_cnt = 4;
 
 int main(int argc, char **argv) {
@@ -37,7 +39,7 @@ int main(int argc, char **argv) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    GLFWwindow *window = glfwCreateWindow(screen_width, screen_height, "Hello Window (GLFW)", NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(screen_width, screen_height, window_title, NULL, NULL);
     if(!window) 
         error("Failed to create a window.", -1);
 
@@ -74,7 +76,8 @@ int main(int argc, char **argv) {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), &indices, GL_STATIC_DRAW);
 
     // Generate and load the texture image
-    GLuint texture = generate_texture("../resources/container.jpg");
+    GLuint texture_container = generate_texture("../resources/container.jpg");
+    GLuint texture_face = generate_texture("../resources/awesomeface.png");
 
     
     // Link the Vertex Attributes
@@ -91,18 +94,24 @@ int main(int argc, char **argv) {
     GLuint program = compile_and_link_shader_program("vertex.glsl", "fragment.glsl");
     glUseProgram(program);
 
+    shader_set_int(program, "texContainer", 0);
+    shader_set_int(program, "texFace", 1);
+
     // rendering loop
     while(!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(0.2, 0.2, 0.2, 1);
 
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture_container);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture_face);
+        
         glUseProgram(program);
         double time = glfwGetTime();
         shader_set_float(program, "colorFactor", (sin(time)+1.0f)/2.0f);
 
         glBindVertexArray(VAO);
-        glBindTexture(GL_TEXTURE_2D, texture);
-        // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
