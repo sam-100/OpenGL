@@ -98,3 +98,10 @@ void shader_set_float(GLuint program, const char *name, float value) {
     GLint loc = glGetUniformLocation(program, name);
     glUniform1f(loc, value);
 }
+
+
+/* --------------------------------------- Texture Related functions ------------------------------------- */
+GLuint generate_texture(const char *file_name) {
+    GLuint texture;
+    return 0;
+}

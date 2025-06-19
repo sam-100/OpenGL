@@ -95,6 +95,7 @@ int main(int argc, char **argv) {
         shader_set_float(program, "colorFactor", (sin(time)+1.0f)/2.0f);
 
         glBindVertexArray(VAO);
+        // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);

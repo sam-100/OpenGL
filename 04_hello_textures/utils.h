@@ -24,4 +24,8 @@ void shader_set_bool(GLuint program, const char *name, bool value);
 void shader_set_float(GLuint program, const char *name, float value);
 
 
+/* --------------------------------------- Texture Related functions ------------------------------------- */
+GLuint generate_texture(const char *file_name);
+
+
 #endif
