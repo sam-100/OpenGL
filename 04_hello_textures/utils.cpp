@@ -74,6 +74,15 @@ GLuint link_shaders(GLuint VSO, GLuint FSO) {
     return program;
 }
 
+GLuint compile_and_link_shader_program(const char *vertex_shader_file, const char *fragment_shader_file) {
+    GLuint vso, fso, program;
+    vso = compile_shader(vertex_shader_file, GL_VERTEX_SHADER);
+    fso = compile_shader(fragment_shader_file, GL_FRAGMENT_SHADER);
+    program = link_shaders(vso, fso);
+    glDeleteShader(vso);
+    glDeleteShader(fso);
+    return program;
+}
 
 void shader_set_int(GLuint program, const char *name, int value) {
     GLint loc = glGetUniformLocation(program, name);

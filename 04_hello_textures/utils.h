@@ -15,6 +15,9 @@ GLuint compile_shader(const char *file_name, GLenum shader_t);
 // links vertex and fragment shaders provided to create a shader program and returns the program id
 GLuint link_shaders(GLuint vs, GLuint fs);
 
+// create a shader program 
+GLuint compile_and_link_shader_program(const char *vertex_shader_file, const char *fragment_shader_file);
+
 // Various functions to set uniform values in shader program
 void shader_set_int(GLuint program, const char *name, int value);
 void shader_set_bool(GLuint program, const char *name, bool value);

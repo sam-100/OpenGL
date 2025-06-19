@@ -15,11 +15,18 @@ int screen_width = 800;
 int screen_height = 600;
 
 float vertices[] = {
-    // position         // colors
-    0.0f, 0.6f, 0.0f,   1.0f, 0.0f, 0.0f, 
-    -0.6f, -0.4f, 0.0f, 0.0f, 1.0f, 0.0f, 
-    0.6f, -0.4f, 0.0f,  0.0f, 0.0f, 1.0f
+    // position           // color
+    -0.5f, -0.5f,  0.0f,  0.2, 0.7, 0.1, 1.0,   // bottom-left
+    -0.5f,   0.5f, 0.0f,  0.2, 0.7, 0.1, 1.0,   // top-left
+     0.5f,  0.5f,  0.0f,  0.2, 0.7, 0.1, 1.0,   // top-right
+     0.5f, -0.5f,  0.0f,  0.2, 0.7, 0.1, 1.0,   // bottom-right
 };
+
+unsigned int indices[] = {
+    0, 1, 2, 
+    2, 3, 0
+};
+int vertex_cnt = 4;
 
 int main(int argc, char **argv) {
     // Initialize glfw
@@ -60,25 +67,26 @@ int main(int argc, char **argv) {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
 
+    // Create and load element buffer object
+    GLuint EBO;
+    glGenBuffers(1, &EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), &indices, GL_STATIC_DRAW);
+
     // Link the Vertex Attributes
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 6*sizeof(float), NULL);
+    int stride = sizeof(vertices)/vertex_cnt;
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, stride, NULL);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_TRUE, 6*sizeof(float), (void*)(3*sizeof(float)));
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_TRUE, stride, ((void*)(3*sizeof(float))));
     glEnableVertexAttribArray(1);
     
+    
     // Compile and Link the shaders to create shader program
-    GLuint VSO = compile_shader("vertex.glsl", GL_VERTEX_SHADER);
-    GLuint FSO = compile_shader("fragment.glsl", GL_FRAGMENT_SHADER);
-    GLuint program = link_shaders(VSO, FSO);
-
-    // Bind the program
-    glDeleteShader(VSO);
-    glDeleteShader(FSO);
+    GLuint program = compile_and_link_shader_program("vertex.glsl", "fragment.glsl");
+    glUseProgram(program);
 
     // rendering loop
     while(!glfwWindowShouldClose(window)) {
-        // processInput(window);
-
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(0.2, 0.2, 0.2, 1);
 
@@ -87,7 +95,7 @@ int main(int argc, char **argv) {
         shader_set_float(program, "colorFactor", (sin(time)+1.0f)/2.0f);
 
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
