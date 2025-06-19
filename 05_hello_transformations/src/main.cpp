@@ -11,7 +11,6 @@
 
 using namespace std;
 
-const char *window_title = "Hello Textures";
 int screen_width = 800;
 int screen_height = 600;
 
@@ -31,29 +30,8 @@ unsigned int indices[] = {
 int vertex_cnt = 4;
 
 int main(int argc, char **argv) {
-    // Initialize glfw
-    if(glfwInit() == GLFW_FALSE)
-        error("Failed to initialize glfw library.", -1);
-
-    // create a window with opengl context
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    GLFWwindow *window = glfwCreateWindow(screen_width, screen_height, window_title, NULL, NULL);
-    if(!window) 
-        error("Failed to create a window.", -1);
-
-    // setting the callback functions
-    glfwSetFramebufferSizeCallback(window, callback_frame_buffer_resize);
-    glfwSetKeyCallback(window, callback_key_press_or_release);
-    glfwSetWindowCloseCallback(window, callback_close_window);
-
-    // set current context
-    glfwMakeContextCurrent(window);
-
-    // load all function pointers
-    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-        error("Failed to load opengl function pointers.", -1);
+    // Initialize OpenGL
+    GLFWwindow *window = glfw_init("Hello Transformations", 4, 2);
     
     // set the viewport size
     glViewport(0, 0, screen_width, screen_height);
@@ -100,7 +78,7 @@ int main(int argc, char **argv) {
     // rendering loop
     while(!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
-        glClearColor(0.2, 0.2, 0.2, 1);.
+        glClearColor(0.2, 0.2, 0.2, 1);
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture_container);
