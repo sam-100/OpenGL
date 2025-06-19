@@ -1,10 +1,12 @@
 #version 330 core
 in vec4 outColor;
+in vec2 TexCord;
 
 out vec4 FragColor;
 
 uniform float colorFactor;
+uniform sampler2D ourTexture;
 
 void main() {
-    FragColor = vec4(outColor.rgb*colorFactor, 1.0f);
+    FragColor = texture(ourTexture, TexCord);
 }

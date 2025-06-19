@@ -15,11 +15,11 @@ int screen_width = 800;
 int screen_height = 600;
 
 float vertices[] = {
-    // position           // color
-    -0.5f, -0.5f,  0.0f,  0.2, 0.7, 0.1, 1.0,   // bottom-left
-    -0.5f,   0.5f, 0.0f,  0.2, 0.7, 0.1, 1.0,   // top-left
-     0.5f,  0.5f,  0.0f,  0.2, 0.7, 0.1, 1.0,   // top-right
-     0.5f, -0.5f,  0.0f,  0.2, 0.7, 0.1, 1.0,   // bottom-right
+    // position           // color              // texture
+    -0.5f, -0.5f,  0.0f,  0.2, 0.7, 0.1, 1.0,   0.0f, 0.0f,     // bottom-left
+    -0.5f,   0.5f, 0.0f,  0.2, 0.7, 0.1, 1.0,   0.0f, 1.0f,     // top-left
+     0.5f,  0.5f,  0.0f,  0.2, 0.7, 0.1, 1.0,   1.0f, 1.0f,     // top-right
+     0.5f, -0.5f,  0.0f,  0.2, 0.7, 0.1, 1.0,   1.0f, 0.0f,     // bottom-right
 };
 
 unsigned int indices[] = {
@@ -73,12 +73,18 @@ int main(int argc, char **argv) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), &indices, GL_STATIC_DRAW);
 
+    // Generate and load the texture image
+    GLuint texture = generate_texture("../resources/container.jpg");
+
+    
     // Link the Vertex Attributes
     int stride = sizeof(vertices)/vertex_cnt;
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, stride, NULL);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_TRUE, stride, ((void*)(3*sizeof(float))));
     glEnableVertexAttribArray(1);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_TRUE, stride, ((void*)(7*sizeof(float))));
+    glEnableVertexAttribArray(2);
     
     
     // Compile and Link the shaders to create shader program
@@ -95,6 +101,7 @@ int main(int argc, char **argv) {
         shader_set_float(program, "colorFactor", (sin(time)+1.0f)/2.0f);
 
         glBindVertexArray(VAO);
+        glBindTexture(GL_TEXTURE_2D, texture);
         // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
