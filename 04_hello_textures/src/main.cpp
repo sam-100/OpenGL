@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
     
     
     // Compile and Link the shaders to create shader program
-    GLuint program = compile_and_link_shader_program("vertex.glsl", "fragment.glsl");
+    GLuint program = compile_and_link_shader_program("src/vertex.glsl", "src/fragment.glsl");
     glUseProgram(program);
 
     shader_set_int(program, "texContainer", 0);
