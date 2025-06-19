@@ -1,7 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 #include <string>
-#include <glad/glad.h>
+#include "glad/glad.h"
 
 void error(const char *msg, int error_code);
 
