@@ -30,11 +30,11 @@ unsigned int indices[] = {
 int vertex_cnt = 4;
 
 int main(int argc, char **argv) {
-    // Initialize OpenGL
+    // Initialize glfw: Create a window, set callback functions, make current context
     GLFWwindow *window = glfw_init("Hello Transformations", 4, 2);
     
-    // set the viewport size
-    glViewport(0, 0, screen_width, screen_height);
+    // Initialize OpenGL: load opengl function pointers and create viewport
+    opengl_init();
 
     // Create vertex array object
     GLuint VAO;

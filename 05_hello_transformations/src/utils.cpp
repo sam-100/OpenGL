@@ -66,13 +66,17 @@ GLFWwindow *glfw_init(const char *title, int major_version, int minor_version) {
 
     // set current context
     glfwMakeContextCurrent(window);
-
-    // load all function pointers
-    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-        error("Failed to load opengl function pointers.", -1);
     return window;
 }
 
+void opengl_init() {
+    // load all function pointers
+    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+        error("Failed to load opengl function pointers.", -1);
+
+    // set the viewport size
+    glViewport(0, 0, screen_width, screen_height);
+}
 
 /* --------------------------------------- Shader Related functions ------------------------------------ */
 

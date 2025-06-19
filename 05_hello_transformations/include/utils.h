@@ -7,6 +7,7 @@
 void error(const char *msg, int error_code);
 std::string load_file(const char *file_name);
 GLFWwindow *glfw_init(const char *title, int major_version, int minor_version);
+void opengl_init();
 
 
 /* --------------------------------------- Shader Related functions ------------------------------------ */
