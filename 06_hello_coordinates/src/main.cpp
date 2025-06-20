@@ -65,6 +65,8 @@ int main(int argc, char **argv) {
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_TRUE, sizeof(vertex), ((void*)(7*sizeof(float))));
     glEnableVertexAttribArray(2);
     
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     // Compile and Link the shaders to create shader program
     GLuint program = compile_and_link_shader_program("src/vertex.glsl", "src/fragment.glsl");
@@ -74,8 +76,7 @@ int main(int argc, char **argv) {
     shader_set_int(program, "texFace", 1);
 
     glm::mat4 transform(1.0f);
-    transform = glm::scale(transform, glm::vec3(0.5f, 0.5f, 0.0f));
-    transform = glm::translate(transform, glm::vec3(0.5f, 0.5f, 0.0f));
+    transform = glm::translate(transform, glm::vec3(0.5f, 0.0f, 0.0f));
 
     // rendering loop
     while(!glfwWindowShouldClose(window)) {
@@ -88,9 +89,9 @@ int main(int argc, char **argv) {
         glBindTexture(GL_TEXTURE_2D, texture_face);
         
         glUseProgram(program);
-        double time = glfwGetTime();
-        float theta = (sin(time)+1.0f)/2.0f*3.14/1000.0f;
-        transform = glm::rotate(transform, theta, glm::vec3(0.0f, 0.0f, 1.0f));
+        float time = glfwGetTime();
+        float theta = (sin(time)+1.0f)/2.0f*360/100;
+        transform = glm::rotate(transform, glm::radians(theta), glm::vec3(0.0f, 0.0f, 1.0f));
         shader_set_mat4(program, "transform", transform);
         
         glBindVertexArray(VAO);
