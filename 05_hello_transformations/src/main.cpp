@@ -8,26 +8,24 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
-
-using namespace std;
+#include "vertex.h"
 
 int screen_width = 800;
 int screen_height = 600;
 
-float vertices[] = {
+std::vector<vertex> vertices = {
     // position           // color              // texture
-    -0.5f, -0.5f,  0.0f,  0.2, 0.7, 0.1, 1.0,   0.0f, 0.0f,     // bottom-left
-    -0.5f,   0.5f, 0.0f,  0.2, 0.7, 0.1, 1.0,   0.0f, 1.0f,     // top-left
-     0.5f,  0.5f,  0.0f,  0.2, 0.7, 0.1, 1.0,   1.0f, 1.0f,     // top-right
-     0.5f, -0.5f,  0.0f,  0.2, 0.7, 0.1, 1.0,   1.0f, 0.0f,     // bottom-right
+    {-0.5f, -0.5f,  0.0f,  0.2, 0.7, 0.1, 1.0,   0.0f, 0.0f},     // bottom-left
+    {-0.5f,   0.5f, 0.0f,  0.2, 0.7, 0.1, 1.0,   0.0f, 1.0f},     // top-left
+    { 0.5f,  0.5f,  0.0f,  0.2, 0.7, 0.1, 1.0,   1.0f, 1.0f},     // top-right
+    { 0.5f, -0.5f,  0.0f,  0.2, 0.7, 0.1, 1.0,   1.0f, 0.0f}      // bottom-right
 };
 
-unsigned int indices[] = {
+std::vector<GLuint> indices = {
     0, 1, 2, 
     2, 3, 0
 };
 
-int vertex_cnt = 4;
 
 int main(int argc, char **argv) {
     // Initialize glfw: Create a window, set callback functions, make current context
@@ -45,26 +43,26 @@ int main(int argc, char **argv) {
     GLuint VBO;
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertex)*vertices.size(), vertices.data(), GL_STATIC_DRAW);
 
     // Create and load element buffer object
     GLuint EBO;
     glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), &indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices.data(), GL_STATIC_DRAW);
 
+    
     // Generate and load the texture image
     GLuint texture_container = generate_texture("../resources/container.jpg");
     GLuint texture_face = generate_texture("../resources/awesomeface.png");
 
     
     // Link the Vertex Attributes
-    int stride = sizeof(vertices)/vertex_cnt;
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, stride, NULL);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, sizeof(vertex), NULL);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_TRUE, stride, ((void*)(3*sizeof(float))));
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_TRUE, sizeof(vertex), ((void*)(3*sizeof(float))));
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_TRUE, stride, ((void*)(7*sizeof(float))));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_TRUE, sizeof(vertex), ((void*)(7*sizeof(float))));
     glEnableVertexAttribArray(2);
     
     
@@ -88,7 +86,7 @@ int main(int argc, char **argv) {
         glUseProgram(program);
         double time = glfwGetTime();
         shader_set_float(program, "colorFactor", (sin(time)+1.0f)/2.0f);
-
+        
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
