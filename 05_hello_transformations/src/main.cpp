@@ -1,14 +1,14 @@
 #include "glad/glad.h"
 #include <GLFW/glfw3.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include "utils.h"
 #include "events.h"
 #include <iostream>
 #include <math.h>
 #include <vector>
 #include "vertex.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 int screen_width = 800;
 int screen_height = 600;
@@ -73,11 +73,15 @@ int main(int argc, char **argv) {
     shader_set_int(program, "texContainer", 0);
     shader_set_int(program, "texFace", 1);
 
+    glm::mat4 transform(1.0f);
+    transform = glm::scale(transform, glm::vec3(0.5f, 0.5f, 0.0f));
+    transform = glm::translate(transform, glm::vec3(0.5f, 0.5f, 0.0f));
+
     // rendering loop
     while(!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(0.2, 0.2, 0.2, 1);
-
+        
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture_container);
         glActiveTexture(GL_TEXTURE1);
@@ -85,7 +89,9 @@ int main(int argc, char **argv) {
         
         glUseProgram(program);
         double time = glfwGetTime();
-        shader_set_float(program, "colorFactor", (sin(time)+1.0f)/2.0f);
+        float theta = (sin(time)+1.0f)/2.0f*3.14/1000.0f;
+        transform = glm::rotate(transform, theta, glm::vec3(0.0f, 0.0f, 1.0f));
+        shader_set_mat4(program, "transform", transform);
         
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

@@ -3,6 +3,7 @@
 #include <string>
 #include "glad/glad.h"
 #include <GLFW/glfw3.h>
+#include <glm/gtc/matrix_transform.hpp>
 
 void error(const char *msg, int error_code);
 std::string load_file(const char *file_name);
@@ -24,6 +25,7 @@ GLuint compile_and_link_shader_program(const char *vertex_shader_file, const cha
 void shader_set_int(GLuint program, const char *name, int value);
 void shader_set_bool(GLuint program, const char *name, bool value);
 void shader_set_float(GLuint program, const char *name, float value);
+void shader_set_mat4(GLuint program, const char *name, glm::mat4 matrix);
 
 
 /* --------------------------------------- Texture Related functions ------------------------------------- */

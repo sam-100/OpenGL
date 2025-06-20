@@ -8,6 +8,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #include "events.h"
+#include "glm/gtc/type_ptr.hpp"
 
 using namespace std;
 
@@ -142,6 +143,11 @@ void shader_set_bool(GLuint program, const char *name, bool value) {
 void shader_set_float(GLuint program, const char *name, float value) {
     GLint loc = glGetUniformLocation(program, name);
     glUniform1f(loc, value);
+}
+
+void shader_set_mat4(GLuint program, const char *name, glm::mat4 value) {
+    GLint loc = glGetUniformLocation(program, name);
+    glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(value));
 }
 
 
