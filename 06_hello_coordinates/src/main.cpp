@@ -15,7 +15,20 @@ float screen_width = 800;
 float screen_height = 600;
 
 extern std::vector<vertex> vertices;
-extern std::vector<GLuint> indices;
+// extern std::vector<GLuint> indices;
+
+glm::vec3 cubePositions[] = {
+    glm::vec3( 0.0f,  0.0f,  0.0f), 
+    glm::vec3( 2.0f,  5.0f, -15.0f), 
+    glm::vec3(-1.5f, -2.2f, -2.5f),  
+    glm::vec3(-3.8f, -2.0f, -12.3f),  
+    glm::vec3( 2.4f, -0.4f, -3.5f),  
+    glm::vec3(-1.7f,  3.0f, -7.5f),  
+    glm::vec3( 1.3f, -2.0f, -2.5f),  
+    glm::vec3( 1.5f,  2.0f, -2.5f), 
+    glm::vec3( 1.5f,  0.2f, -1.5f), 
+    glm::vec3(-1.3f,  1.0f, -1.5f)  
+};
 
 int main(int argc, char **argv) {
     // Initialize glfw: Create a window, set callback functions, make current context
@@ -24,29 +37,36 @@ int main(int argc, char **argv) {
     // Initialize OpenGL: load opengl function pointers and create viewport
     opengl_init();
 
+    // Create the cube objects
     GLuint program = compile_and_link_shader_program("src/vertex.glsl", "src/fragment.glsl");
-    object cube(vertices, indices, program);
-
+    std::vector<object> cubes(10, object(vertices, program));
+    
+    // transformation matrices
+    glm::mat4 view(1.0f), project(1.0f);
+    view = glm::translate(view, glm::vec3(0, 0, -3));
+    project = glm::perspective(glm::radians(45.0f), screen_width/screen_height, 0.1f, 100.0f);
     
     // rendering loop
     while(!glfwWindowShouldClose(window)) {
-        glClear(GL_COLOR_BUFFER_BIT);
+        // processInput();
+        
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.2, 0.2, 0.2, 1);
-        
-        // time calculation 
-        double time = glfwGetTime();
-        float theta = (sin(time)+1.0f)/2.0f*360.0f/100.0f;
-        
-        // transform matrix 
-        glm::mat4 model(1.0f), view(1.0f), project(1.0f);
-        model = glm::rotate(model, theta, glm::vec3(1, 0, 0));
-        view = glm::translate(view, glm::vec3(0, 0, -3));
-        project = glm::perspective(glm::radians(45.0f), screen_width/screen_height, 0.1f, 100.0f);
-        
-        // draw cube
-        glm::mat4 transform_mat = project*view*model;
-        cube.set_uniform_mat4("transform", transform_mat);
-        cube.draw();
+
+        for(int i=0; i<10; i++) {
+            object &cube = cubes[i];
+
+            // transform matrix 
+            glm::mat4 model(1.0f);
+            model = glm::translate(model, cubePositions[i]);
+            model = glm::rotate(model, glm::radians(20.0f*i), glm::vec3(1.0f, 0.3f, 0.5f));
+            
+            // draw cube
+            glm::mat4 transform_mat = project*view*model;
+            cube.set_uniform_mat4("transform", transform_mat);
+            
+            cube.draw();
+        }
 
         glfwSwapBuffers(window);
         glfwPollEvents();

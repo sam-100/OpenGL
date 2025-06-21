@@ -77,6 +77,8 @@ void opengl_init() {
 
     // set the viewport size
     glViewport(0, 0, screen_width, screen_height);
+
+    glEnable(GL_DEPTH_TEST);
 }
 
 /* --------------------------------------- Shader Related functions ------------------------------------ */

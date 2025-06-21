@@ -3,10 +3,9 @@
 #include <iostream>
 
 
-object::object(const std::vector<vertex> &vertices, const std::vector<GLuint> &indices, GLuint shader_program) {
+object::object(const std::vector<vertex> &vertices, GLuint shader_program) {
     for(vertex v : vertices)
         this->vertices.push_back(v);
-    this->indices = indices;
 
     // Create vertex array object
     glGenVertexArrays(1, &VAO);
@@ -16,11 +15,6 @@ object::object(const std::vector<vertex> &vertices, const std::vector<GLuint> &i
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertex)*vertices.size(), vertices.data(), GL_STATIC_DRAW);
-
-    // Create and load element buffer object
-    glGenBuffers(1, &EBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*indices.size(), indices.data(), GL_STATIC_DRAW);
     
     // Link the Vertex Attributes
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, sizeof(vertex), ((void*)(0*sizeof(float))));
@@ -44,7 +38,7 @@ object::object(const std::vector<vertex> &vertices, const std::vector<GLuint> &i
     shader_set_int(program, "texFace", 1);
 }
 
-void object::draw() const  {
+void object::draw() const  {    
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture_container);
     glActiveTexture(GL_TEXTURE1);
@@ -52,7 +46,7 @@ void object::draw() const  {
     
     glUseProgram(program);
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 }
 
 

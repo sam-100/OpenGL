@@ -8,7 +8,7 @@
 
 class object {
 public:
-    object(const std::vector<vertex> &vertices, const std::vector<GLuint> &indices, GLuint shader_program);
+    object(const std::vector<vertex> &vertices, GLuint shader_program);
     
     void draw() const;
     
@@ -18,8 +18,7 @@ public:
 
 private:
     std::vector<vertex> vertices;
-    std::vector<GLuint> indices;
-    GLuint VAO, VBO, EBO;
+    GLuint VAO, VBO;
     GLuint program;
     GLuint texture_container, texture_face;
 };
