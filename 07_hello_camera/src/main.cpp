@@ -12,8 +12,8 @@
 #include "object.h"
 #include "camera.h"
 
-float screen_width = 800;
-float screen_height = 600;
+float screen_width = 1000;
+float screen_height = 800;
 
 extern std::vector<vertex> vertices;
 // extern std::vector<GLuint> indices;
@@ -41,6 +41,7 @@ int main(int argc, char **argv) {
     
     // Initialize OpenGL: load opengl function pointers and create viewport
     opengl_init();
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);    // capture the cursor
 
     // Create the cube objects
     GLuint program = compile_and_link_shader_program("src/vertex.glsl", "src/fragment.glsl");

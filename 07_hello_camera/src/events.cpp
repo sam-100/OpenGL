@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "glm/gtc/matrix_transform.hpp"
 #include "camera.h"
+#include <iostream>
 
 extern glm::mat4 view, project;
 extern camera cam;
@@ -21,26 +22,51 @@ void callback_key_press_or_release(GLFWwindow *window, int key, int scancode, in
 
         // control keys
         case GLFW_KEY_LEFT:
-            cam.translate(glm::vec3(-0.1, 0, 0));
+        case GLFW_KEY_A:
+            cam.move_left();
             break;
         case GLFW_KEY_RIGHT:
-            cam.translate(glm::vec3(0.1, 0, 0));
+        case GLFW_KEY_D:
+            cam.move_right();
             break;
         case GLFW_KEY_UP:
-            cam.translate(glm::vec3(0, 0.1, 0));
+            cam.move_up();
             break;
         case GLFW_KEY_DOWN:
-            cam.translate(glm::vec3(0, -0.1, 0));
+            cam.move_down();
             break;
         case GLFW_KEY_W:
-            cam.translate(glm::vec3(0, 0, -0.1));
+            cam.move_front();
             break;
         case GLFW_KEY_S:
-            cam.translate(glm::vec3(0, 0, 0.1));
+            cam.move_back();
+            break;
+        case GLFW_KEY_SPACE:
+            cam.reset();
             break;
     }
 }
 
 void callback_frame_buffer_resize(GLFWwindow *window, int width, int height) {
     glViewport(0, 0, width, height);
+}
+
+void callback_cursor_pos(GLFWwindow *window, double xPos, double yPos) {
+    static double x = xPos;
+    static double y = yPos;
+
+    double dx, dy;
+    dx = xPos-x;
+    dy = yPos-y;
+
+    // todo: change camera yaw, and pitch here
+    cam.rotate_horizontal(-dx);
+    cam.rotate_vertical(-dy);
+
+    x = xPos;
+    y = yPos;
+}
+
+void callback_scroll(GLFWwindow *window, double xOffset, double yOffset) {
+    cam.zoom(-yOffset);
 }

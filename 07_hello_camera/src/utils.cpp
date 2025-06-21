@@ -64,6 +64,8 @@ GLFWwindow *glfw_init(const char *title, int major_version, int minor_version) {
     glfwSetFramebufferSizeCallback(window, callback_frame_buffer_resize);
     glfwSetKeyCallback(window, callback_key_press_or_release);
     glfwSetWindowCloseCallback(window, callback_close_window);
+    glfwSetCursorPosCallback(window, callback_cursor_pos);
+    glfwSetScrollCallback(window, callback_scroll);
 
     // set current context
     glfwMakeContextCurrent(window);
