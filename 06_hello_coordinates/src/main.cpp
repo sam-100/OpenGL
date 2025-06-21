@@ -43,9 +43,15 @@ int main(int argc, char **argv) {
     
     // transformation matrices
     glm::mat4 view(1.0f), project(1.0f);
+    for(int i=0; i<cubes.size(); i++) {
+        object &cube = cubes[i];
+        cube.translate(cubePositions[i]);
+        cube.rotate(glm::radians(20.0f*i), glm::vec3(1.0f, 0.3f, 0.5f));
+    }
     view = glm::translate(view, glm::vec3(0, 0, -3));
     project = glm::perspective(glm::radians(45.0f), screen_width/screen_height, 0.1f, 100.0f);
     
+
     // rendering loop
     while(!glfwWindowShouldClose(window)) {
         // processInput();
@@ -53,19 +59,8 @@ int main(int argc, char **argv) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.2, 0.2, 0.2, 1);
 
-        for(int i=0; i<10; i++) {
-            object &cube = cubes[i];
-
-            // transform matrix 
-            glm::mat4 model(1.0f);
-            model = glm::translate(model, cubePositions[i]);
-            model = glm::rotate(model, glm::radians(20.0f*i), glm::vec3(1.0f, 0.3f, 0.5f));
-            
-            // draw cube
-            glm::mat4 transform_mat = project*view*model;
-            cube.set_uniform_mat4("transform", transform_mat);
-            
-            cube.draw();
+        for(object &cube : cubes) {            
+            cube.draw(view, project);
         }
 
         glfwSwapBuffers(window);

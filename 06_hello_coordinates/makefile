@@ -9,6 +9,7 @@ SRC = 	src/main.cpp \
 		src/object.cpp \
 		src/vertex.cpp
 
+
 all: $(SRC) 
 	@ $(CXX) -o main $(CFLAGS) $(SRC) $(LDFLAGS)
 

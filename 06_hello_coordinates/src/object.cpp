@@ -36,9 +36,15 @@ object::object(const std::vector<vertex> &vertices, GLuint shader_program) {
 
     shader_set_int(program, "texContainer", 0);
     shader_set_int(program, "texFace", 1);
+
+    model = glm::mat4(1.0f);
 }
 
-void object::draw() const  {    
+void object::draw(glm::mat4 view, glm::mat4 projection) const  {
+    glm::mat4 transform = glm::mat4(1.0f);
+    transform = projection*view*model;
+    set_uniform_mat4("transform", transform);
+
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture_container);
     glActiveTexture(GL_TEXTURE1);
@@ -50,14 +56,31 @@ void object::draw() const  {
 }
 
 
-void object::set_uniform_int(const char *name, int value) {
+void object::set_uniform_int(const char *name, int value) const {
     shader_set_int(program, name, value);
 }
 
-void object::set_uniform_float(const char *name, float value) {
+void object::set_uniform_float(const char *name, float value) const {
     shader_set_float(program, name, value);
 }
 
-void object::set_uniform_mat4(const char *name, glm::mat4 value) {
+void object::set_uniform_mat4(const char *name, glm::mat4 value) const {
     shader_set_mat4(program, name, value);
+}
+
+
+void object::translate(glm::vec3 displacement) {
+    model = glm::translate(model, displacement);
+}
+
+void object::rotate(float angle, glm::vec3 axis) {
+    model = glm::rotate(model, angle, axis);
+}
+
+void object::scale(glm::vec3 factor) {
+    model = glm::scale(model, factor);
+}
+
+void object::set_model_matrix(glm::mat4 value) {
+    model = value;
 }
