@@ -11,6 +11,7 @@ public:
     object(const std::vector<vertex> &vertices, GLuint shader_program);
     
     void draw(glm::mat4 view, glm::mat4 projection) const;
+    void draw(glm::mat4 transform) const;
     
     void set_uniform_int(const char *name, int value) const ;
     void set_uniform_float(const char *name, float value) const ;
@@ -21,6 +22,7 @@ public:
     void scale(glm::vec3 factor);
 
     void set_model_matrix(glm::mat4 value);
+    glm::mat4 get_model_matrix() const;
 
 private:
     std::vector<vertex> vertices;

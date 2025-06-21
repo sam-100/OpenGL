@@ -10,12 +10,15 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "object.h"
+#include "camera.h"
 
 float screen_width = 800;
 float screen_height = 600;
 
 extern std::vector<vertex> vertices;
 // extern std::vector<GLuint> indices;
+
+camera cam(glm::vec3(0, 0, 3), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0), 45.0f, screen_width/screen_height, 0.1f, 100.0f);
 
 glm::vec3 cubePositions[] = {
     glm::vec3( 0.0f,  0.0f,  0.0f), 
@@ -61,7 +64,7 @@ int main(int argc, char **argv) {
         glClearColor(0.2, 0.2, 0.2, 1);
 
         for(object &cube : cubes) {            
-            cube.draw(view, project);
+            cube.draw(cam.get_transform(cube.get_model_matrix()));
         }
 
         glfwSwapBuffers(window);

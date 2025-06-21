@@ -43,6 +43,10 @@ object::object(const std::vector<vertex> &vertices, GLuint shader_program) {
 void object::draw(glm::mat4 view, glm::mat4 projection) const  {
     glm::mat4 transform = glm::mat4(1.0f);
     transform = projection*view*model;
+    draw(transform);
+}
+
+void object::draw(glm::mat4 transform) const {
     set_uniform_mat4("transform", transform);
 
     glActiveTexture(GL_TEXTURE0);
@@ -54,7 +58,6 @@ void object::draw(glm::mat4 view, glm::mat4 projection) const  {
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 }
-
 
 void object::set_uniform_int(const char *name, int value) const {
     shader_set_int(program, name, value);
@@ -83,4 +86,8 @@ void object::scale(glm::vec3 factor) {
 
 void object::set_model_matrix(glm::mat4 value) {
     model = value;
+}
+
+glm::mat4 object::get_model_matrix() const {
+    return model;
 }
