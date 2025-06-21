@@ -21,7 +21,7 @@ extern std::vector<vertex> vertices;
 camera cam(glm::vec3(0, 0, 3), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0), 45.0f, screen_width/screen_height, 0.1f, 100.0f);
 
 glm::vec3 cubePositions[] = {
-    glm::vec3( 0.0f,  0.0f,  0.0f), 
+    glm::vec3( 0.0f,  0.0f,  -1.0f), 
     glm::vec3( 2.0f,  5.0f, -15.0f), 
     glm::vec3(-1.5f, -2.2f, -2.5f),  
     glm::vec3(-3.8f, -2.0f, -12.3f),  
@@ -37,7 +37,7 @@ glm::mat4 view(1.0f), project(1.0f);
 
 int main(int argc, char **argv) {
     // Initialize glfw: Create a window, set callback functions, make current context
-    GLFWwindow *window = glfw_init("Hello Transformations", 4, 2);
+    GLFWwindow *window = glfw_init("Hello Camera", 4, 2);
     
     // Initialize OpenGL: load opengl function pointers and create viewport
     opengl_init();
@@ -64,8 +64,10 @@ int main(int argc, char **argv) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.2, 0.2, 0.2, 1);
 
-        for(object &cube : cubes) {            
+        for(int i=0; i<10; i++) {  
+            object &cube = cubes[i];          
             cube.draw(cam.get_transform(cube.get_model_matrix()));
+            cube.rotate(0.005, cubePositions[i]);
         }
 
         glfwSwapBuffers(window);
