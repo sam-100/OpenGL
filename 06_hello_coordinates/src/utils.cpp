@@ -12,7 +12,7 @@
 
 using namespace std;
 
-extern int screen_width, screen_height;
+extern float screen_width, screen_height;
 
 void error(const char *msg, int error_code) {
     cerr << "Error: " << msg << endl;

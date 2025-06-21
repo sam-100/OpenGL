@@ -8,13 +8,12 @@
 
 class object {
 public:
-    object(const std::vector<vertex> &vertices, const std::vector<GLuint> &indices);
-
+    object(const std::vector<vertex> &vertices, const std::vector<GLuint> &indices, GLuint shader_program);
+    
     void draw() const;
+    
     void set_uniform_int(const char *name, int value);
-
     void set_uniform_float(const char *name, float value);
-
     void set_uniform_mat4(const char *name, glm::mat4 value);
 
 private:

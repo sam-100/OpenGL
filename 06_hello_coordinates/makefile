@@ -6,12 +6,13 @@ SRC = 	src/main.cpp \
 		src/utils.cpp \
 		src/events.c \
       	$(ROOT_DIR)/ThirdParty/src/glad.c \
-		src/object.cpp
+		src/object.cpp \
+		src/vertex.cpp
 
 all: $(SRC) 
 	@ $(CXX) -o main $(CFLAGS) $(SRC) $(LDFLAGS)
 
-gdb: CFLAGS += -g
+gdb: CFLAGS += -g	
 gdb: all
 
 run: main

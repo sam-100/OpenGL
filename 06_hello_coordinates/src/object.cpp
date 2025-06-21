@@ -1,7 +1,9 @@
 #include "object.h"
 #include "utils.h"
+#include <iostream>
 
-object::object(const std::vector<vertex> &vertices, const std::vector<GLuint> &indices) {
+
+object::object(const std::vector<vertex> &vertices, const std::vector<GLuint> &indices, GLuint shader_program) {
     for(vertex v : vertices)
         this->vertices.push_back(v);
     this->indices = indices;
@@ -18,15 +20,13 @@ object::object(const std::vector<vertex> &vertices, const std::vector<GLuint> &i
     // Create and load element buffer object
     glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*indices.size(), indices.data(), GL_STATIC_DRAW);
     
     // Link the Vertex Attributes
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, sizeof(vertex), NULL);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, sizeof(vertex), ((void*)(0*sizeof(float))));
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_TRUE, sizeof(vertex), ((void*)(3*sizeof(float))));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_TRUE, sizeof(vertex), ((void*)((sizeof(position)))));
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_TRUE, sizeof(vertex), ((void*)(7*sizeof(float))));
-    glEnableVertexAttribArray(2);
     
     // unbind vao and vbo
     glBindVertexArray(0);
@@ -37,7 +37,7 @@ object::object(const std::vector<vertex> &vertices, const std::vector<GLuint> &i
     texture_face = generate_texture("../resources/awesomeface.png");
 
     // Compile and Link the shaders to create shader program
-    GLuint program = compile_and_link_shader_program("src/vertex.glsl", "src/fragment.glsl");
+    program = shader_program;
     glUseProgram(program);
 
     shader_set_int(program, "texContainer", 0);
