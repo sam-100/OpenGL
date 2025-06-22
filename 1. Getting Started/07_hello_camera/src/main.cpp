@@ -37,7 +37,7 @@ glm::mat4 view(1.0f), project(1.0f);
 
 int main(int argc, char **argv) {
     // Initialize glfw: Create a window, set callback functions, make current context
-    GLFWwindow *window = glfw_init("Hello Camera", 4, 2);
+    GLFWwindow *window = glfw_init("1.7. Hello Camera", 4, 2);
     
     // Initialize OpenGL: load opengl function pointers and create viewport
     opengl_init();

@@ -11,7 +11,7 @@ int main(int argc, char **argv) {
     if(glfwInit() == GLFW_FALSE)
         error("Failed to initialize glfw library.", -1);
 
-    GLFWwindow *window = glfwCreateWindow(900, 600, "Hello Window (GLFW)", NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(900, 600, "1.0. Hello Window (GLFW)", NULL, NULL);
     if(!window) 
         error("Failed to create a window.", -1);
 

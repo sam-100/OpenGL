@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 
-    GLFWwindow *window = glfwCreateWindow(screen_width, screen_height, "Hello Window (GLFW)", NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(screen_width, screen_height, "1.1. Hello OpenGL", NULL, NULL);
     if(!window) 
         error("Failed to create a window.", -1);
     glfwMakeContextCurrent(window);

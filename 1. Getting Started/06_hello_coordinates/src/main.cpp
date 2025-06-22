@@ -32,7 +32,7 @@ glm::vec3 cubePositions[] = {
 
 int main(int argc, char **argv) {
     // Initialize glfw: Create a window, set callback functions, make current context
-    GLFWwindow *window = glfw_init("Hello Coordinates", 4, 2);
+    GLFWwindow *window = glfw_init("1.6. Hello Coordinates", 4, 2);
     
     // Initialize OpenGL: load opengl function pointers and create viewport
     opengl_init();

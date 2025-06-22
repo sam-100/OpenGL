@@ -29,7 +29,7 @@ std::vector<GLuint> indices = {
 
 int main(int argc, char **argv) {
     // Initialize glfw: Create a window, set callback functions, make current context
-    GLFWwindow *window = glfw_init("Hello Transformations", 4, 2);
+    GLFWwindow *window = glfw_init("1.5. Hello Transformations", 4, 2);
     
     // Initialize OpenGL: load opengl function pointers and create viewport
     opengl_init();

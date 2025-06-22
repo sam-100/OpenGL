@@ -29,15 +29,12 @@ main: $(OBJ)
 
 # Compile .cpp/.c files into .o files in bin/
 bin/%.o: src/%.cpp
-	@mkdir -p $(dir $@)
 	@$(CXX) -c $< -o $@ $(CFLAGS)
 
 bin/%.o: src/%.c
-	@mkdir -p $(dir $@)
 	@$(CC) -c $< -o $@ $(CFLAGS)
 
 bin/%.o: $(ROOT_DIR)/ThirdParty/src/%.c
-	@mkdir -p $(dir $@)
 	@$(CC) -c $< -o $@ $(CFLAGS)
 
 # Debug build
@@ -50,4 +47,4 @@ run: main
 
 # Clean build artifacts
 clean:
-	@rm -rf bin/ main
+	@rm -rf bin/* main

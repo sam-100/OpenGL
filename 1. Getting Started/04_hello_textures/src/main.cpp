@@ -11,7 +11,7 @@
 
 using namespace std;
 
-const char *window_title = "Hello Textures";
+const char *window_title = "1.4. Hello Textures";
 int screen_width = 800;
 int screen_height = 600;
 
