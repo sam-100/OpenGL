@@ -100,7 +100,7 @@ int main(int argc, char **argv) {
     // rendering loop
     while(!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
-        glClearColor(0.2, 0.2, 0.2, 1);.
+        glClearColor(0.2, 0.2, 0.2, 1);
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture_container);
