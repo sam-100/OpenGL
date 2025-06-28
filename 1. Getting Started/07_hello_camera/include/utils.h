@@ -29,6 +29,7 @@ void shader_set_mat4(GLuint program, const char *name, glm::mat4 matrix);
 
 
 /* --------------------------------------- Texture Related functions ------------------------------------- */
+// Generate a simple 2D texture out of given image and return its handler
 GLuint generate_texture(const char *file_name);
 
 
