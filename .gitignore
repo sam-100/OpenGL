@@ -1,5 +1,5 @@
-*/main
-*/bin/*.o
+main
+*.o
 glspec33.core.pdf
 
 !*/bin/.gitkeep

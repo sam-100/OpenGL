@@ -1,5 +1,5 @@
 CC = gcc
-ROOT_DIR = ~/Desktop/OpenGL
+ROOT_DIR = ../..
 CFLAGS = -I $(ROOT_DIR)/ThirdParty/include
 LDFLAGS = -lGL -lglfw 
 SRC = main.cpp utils.cpp events.c \

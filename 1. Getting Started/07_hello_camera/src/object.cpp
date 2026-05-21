@@ -91,3 +91,4 @@ void object::set_model_matrix(glm::mat4 value) {
 glm::mat4 object::get_model_matrix() const {
     return model;
 }
+

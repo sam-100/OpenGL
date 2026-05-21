@@ -1,7 +1,7 @@
 #include "utils.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <GLFW/glfw3.h>
+#include "GLFW/glfw3.h"
 
 void error(const char *msg, int error_code) {
     fprintf(stderr, "Error: %s\n", msg);

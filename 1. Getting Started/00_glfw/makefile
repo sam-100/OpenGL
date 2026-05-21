@@ -1,7 +1,7 @@
 CC = gcc
-ROOT_DIR = ~/Desktop/OpenGL
-CFLAGS = -I $(ROOT_DIR)/ThirdParty
-LDFLAGS = -lGL -lglfw 
+ROOT_DIR = ../..
+CFLAGS = -I $(ROOT_DIR)/ThirdParty/include
+LDFLAGS = -lGL -lglfw
 SRC = main.c
 
 all: $(SRC)

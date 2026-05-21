@@ -1,7 +1,7 @@
 #ifndef EVENTS_H
 #define EVENTS_H
 
-#include <GLFW/glfw3.h>
+#include "GLFW/glfw3.h"
 
 
 void callback_close_window(GLFWwindow *window);

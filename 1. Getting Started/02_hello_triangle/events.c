@@ -1,5 +1,5 @@
 #include "events.h"
-#include <GLFW/glfw3.h>
+#include "GLFW/glfw3.h"
 #include <stdio.h>
 
 void callback_close_window(GLFWwindow *window) {

@@ -1,5 +1,5 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
         // processInput(window);
 
         glClear(GL_COLOR_BUFFER_BIT);
-        glClearColor(0, 0.6, 0.1, 1);
+        glClearColor(0.3, 0.3, 0.0, 1);
 
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
