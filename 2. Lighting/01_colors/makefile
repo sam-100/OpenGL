@@ -1,7 +1,7 @@
 # Compiler and flags
 CXX = g++
 CC = gcc
-ROOT_DIR = $(HOME)/Desktop/OpenGL
+ROOT_DIR = ../..
 CFLAGS = -I$(ROOT_DIR)/ThirdParty/include -Iinclude
 LDFLAGS = -L$(ROOT_DIR)/ThirdParty/lib -lGL -lglfw
 
