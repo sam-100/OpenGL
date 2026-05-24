@@ -3,7 +3,7 @@
 #include <string>
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
-#include <glm/gtc/matrix_transform.hpp>
+#include "glm/gtc/matrix_transform.hpp"
 
 void error(const char *msg, int error_code);
 std::string load_file(const char *file_name);

@@ -15,6 +15,8 @@
 float screen_width = 1000;
 float screen_height = 800;
 
+using namespace std;
+
 extern std::vector<vertex> vertices;
 // extern std::vector<GLuint> indices;
 
@@ -34,14 +36,13 @@ int main(int argc, char **argv) {
     object cube(vertices, program);
 
     
-
     // rendering loop
+    cout << "entering rendering loop" << endl;
     while(!glfwWindowShouldClose(window)) {
         // processInput();
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.2, 0.2, 0.2, 1);
-
         
 
         glfwSwapBuffers(window);

@@ -49,9 +49,8 @@ int main(int argc, char **argv) {
     
     // transformation matrices
     for(int i=0; i<cubes.size(); i++) {
-        object &cube = cubes[i];
-        cube.translate(cubePositions[i]);
-        cube.rotate(glm::radians(20.0f*i), glm::vec3(1.0f, 0.3f, 0.5f));
+        cubes[i].translate(cubePositions[i]);
+        cubes[i].rotate(glm::radians(20.0f*i), glm::vec3(1.0f, 0.3f, 0.5f));
     }
     view = glm::translate(view, glm::vec3(0, 0, -3));
     project = glm::perspective(glm::radians(45.0f), screen_width/screen_height, 0.1f, 100.0f);

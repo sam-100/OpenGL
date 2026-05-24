@@ -8,7 +8,7 @@
 /// @defgroup gtc_matrix_transform GLM_GTC_matrix_transform
 /// @ingroup gtc
 ///
-/// Include <glm/gtc/matrix_transform.hpp> to use the features of this extension.
+/// Include "glm/gtc/matrix_transform.hpp" to use the features of this extension.
 ///
 /// Defines functions that generate common transformation matrices.
 ///
